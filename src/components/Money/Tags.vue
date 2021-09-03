@@ -59,7 +59,7 @@ export default class Tags extends Vue{
       margin-right: 12px;
       margin-top: 4px;
       &.selected{
-        background: darken($bg,50%);
+        background: #2b2e4a;
         color:white;
       }
     }
@@ -69,7 +69,7 @@ export default class Tags extends Vue{
     padding-top: 16px;
 
     button {
-      background: transparent;
+      background: #2b2e4a;
       border: none;
       color: #999;
       border-bottom: 1px solid;
