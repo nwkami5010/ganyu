@@ -1,11 +1,11 @@
 <template>
   <div>
-    <label class="notes">
+    <label class="formItem">
       <span class="name"> {{this.fieldName }}</span>
       <!--当input的value等于输入的value，可以用v-model代替-->
       <input type="text" v-model="value"
 
-             placeholder="this.placeholder">
+             placeholder="placeholder">
     </label>
 
   </div>
@@ -13,11 +13,11 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component,Watch,Prop} from 'vue-property-decorator';
+import {Component,Prop} from 'vue-property-decorator';
 
 @Component
 export default class FormItem extends Vue {
-  value = '';
+  @Prop({default:''}) value!:string;
   @Prop({required:true}) fieldName!: string;
   @Prop() placeholder?: string;
 
@@ -30,7 +30,7 @@ export default class FormItem extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.notes{
+.formItem{
   font-size: 14px;
   background: #f5f5f5;
   // display: block;//label默认display:inlineblock,改成block才能显示上面背景
@@ -41,7 +41,7 @@ export default class FormItem extends Vue {
     padding-right: 16px;
   }
   input{
-    height:64px;//height line-height都可以 64px
+    height:40px;//height line-height都可以 64px
     flex-grow: 1;//尽量不写宽度
     background: transparent;
     border: none;
