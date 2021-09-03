@@ -2,7 +2,7 @@
   <Layout class-prefix="layout">
     {{record}}
 
-    <NumberPad :value="record.amount" @update:value="onUpdateAmount"/>
+    <NumberPad :value="record.amount" @update:value="onUpdateAmount" @submit="saveRecord"/>
     <!--<Types :value="record.type" @update:value="onUpdateType"/>-->
     <!--传给子组件的value的值是record.type，子组件改的也是record.type，直接value.sync-->
     <Types :value.sync="record.type"/>
@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component,Watch} from 'vue-property-decorator';
 
 import NumberPad from '@/components/Money/NumberPad.vue';
 import Types from '@/components/Types.vue';
@@ -35,6 +35,7 @@ type Record = {
 })
 export default class Money extends Vue {
   tags = ['衣', '食', '住', '行', '彩票'];
+  recordList: Record[] = [];
   record: Record = {
     tags: [],
     notes: '',
@@ -52,6 +53,18 @@ export default class Money extends Vue {
 
   onUpdateAmount(value: string) {
     this.record.amount = parseFloat(value);
+  }
+
+  saveRecord(){
+    // 深拷贝：先变成字符串，再变成对象，这样就不是同一个内存地址了
+    const record2 = JSON.parse(JSON.stringify(this.record));
+    this.recordList.push(record2);
+    console.log(this.recordList);
+  }
+
+  @Watch('recordList')
+  onRecordListChange() {
+    window.localStorage.setItem('recordList', JSON.stringify(this.recordList));
   }
 
 }
