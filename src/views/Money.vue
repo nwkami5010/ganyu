@@ -64,15 +64,12 @@ export default class Money extends Vue {
 
   saveRecord(){
     // 深拷贝：先变成字符串，再变成对象，这样就不是同一个内存地址了
-    const record2 :RecordItem = recordListModel.clone(this.record);
-    record2.createdAt = new Date();
-    this.recordList.push(record2);
-    console.log(this.recordList);
+    recordListModel.create(this.record);
   }
 
   @Watch('recordList')
   onRecordListChange() {
-    recordListModel.save(this.recordList);
+    recordListModel.save();
   }
 
 }
