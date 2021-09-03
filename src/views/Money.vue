@@ -18,34 +18,24 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component,Watch} from 'vue-property-decorator';
+import {Component} from 'vue-property-decorator';
 
 import NumberPad from '@/components/Money/NumberPad.vue';
 import Types from '@/components/Types.vue';
 import Tags from '@/components/Money/Tags.vue';
-
-import {recordListModel} from '@/models/recordListModel';
-
 import FormItem from '@/components/Money/FormItem.vue';
 
 
 
-const recordList = recordListModel.fetch();
-const tagList = tagListModel.fetch();
-type Record = {
-  tags: string[];
-  notes: string;
-  type: string;
-  amount: number;
-  createdAt?: Date;
-}
+
+
 
 @Component({
   components: {FormItem, Tags, Notes, Types, NumberPad}
 })
 export default class Money extends Vue {
   tags = tagList;
-  recordList: RecordItem[] = recordList;
+  recordList= window.recordList;
   record: RecordItem = {
     tags: [], notes: '', type: '-', amount: 0
   };
@@ -64,13 +54,9 @@ export default class Money extends Vue {
 
   saveRecord(){
     // 深拷贝：先变成字符串，再变成对象，这样就不是同一个内存地址了
-    recordListModel.create(this.record);
+    window.createRecord(this.record);
   }
 
-  @Watch('recordList')
-  onRecordListChange() {
-    recordListModel.save();
-  }
 
 }
 </script>
