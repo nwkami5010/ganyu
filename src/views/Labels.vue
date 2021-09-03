@@ -19,7 +19,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import {tagListModel} from '@/models/tagListModel';
+
 import Button from '@/components/Button.vue';
 tagListModel.fetch();
 
@@ -29,9 +29,7 @@ tagListModel.fetch();
 })
 export default class Labels extends Vue {
   tags = window.tagList;
-  created() {
-    console.log(tagListModel);
-  }
+
   createTag() {
     const name = window.prompt('请输入标签名');
     if (name) {
