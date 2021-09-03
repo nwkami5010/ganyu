@@ -1,11 +1,11 @@
 <template>
   <div>
     <label class="notes">
-      <span class="name">  备注</span>
+      <span class="name"> {{this.fieldName }}</span>
       <!--当input的value等于输入的value，可以用v-model代替-->
       <input type="text" v-model="value"
 
-             placeholder="在这里输入备注">
+             placeholder="this.placeholder">
     </label>
 
   </div>
@@ -13,11 +13,14 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component,Watch} from 'vue-property-decorator';
+import {Component,Watch,Prop} from 'vue-property-decorator';
 
 @Component
 export default class Notes extends Vue {
   value = '';
+  @Prop({required:true}) fieldName!: string;
+  @Prop() placeholder?: string;
+
 
   @Watch('value')
   onValueChanged(value: string) {
