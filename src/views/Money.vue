@@ -1,6 +1,6 @@
 <template >
   <Layout class-prefix="layout">
-    {{recordList}}
+
 
     <NumberPad :value="record.amount" @update:value="onUpdateAmount" @submit="saveRecord"/>
     <!--<Types :value="record.type" @update:value="onUpdateType"/>-->
@@ -22,19 +22,9 @@ import NumberPad from '@/components/Money/NumberPad.vue';
 import Types from '@/components/Types.vue';
 import Tags from '@/components/Money/Tags.vue';
 import Notes from '@/components/Money/Notes.vue';
+import {model} from '@/model';
+const recordList = model.fetch();
 
-const version = window.localStorage.getItem('version') || '0';
-const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
-if (version === '0.0.1') {
-  //数据迁移 | 数据库升级
-  recordList.forEach(record => {
-    record.createdAt = new Date(2020, 0, 1);
-  });
-  //升级完成，保存数据
-  window.localStorage.setItem('recordList', JSON.stringify(recordList));
-}
-//升级版本
-window.localStorage.setItem('version', '0.0.2');
 type Record = {
   tags: string[];
   notes: string;
@@ -48,12 +38,9 @@ type Record = {
 })
 export default class Money extends Vue {
   tags = ['衣', '食', '住', '行', '彩票'];
-  recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
-  record: Record = {
-    tags: [],
-    notes: '',
-    type: '-',
-    amount: 0
+  recordList: RecordItem[] = recordList;
+  record: RecordItem = {
+    tags: [], notes: '', type: '-', amount: 0
   };
 
   onUpdateTags(value: string[]) {
@@ -70,7 +57,7 @@ export default class Money extends Vue {
 
   saveRecord(){
     // 深拷贝：先变成字符串，再变成对象，这样就不是同一个内存地址了
-    const record2 :Record = JSON.parse(JSON.stringify(this.record));
+    const record2 :RecordItem = model.clone(this.record);
     record2.createdAt = new Date();
     this.recordList.push(record2);
     console.log(this.recordList);
@@ -78,7 +65,7 @@ export default class Money extends Vue {
 
   @Watch('recordList')
   onRecordListChange() {
-    window.localStorage.setItem('recordList', JSON.stringify(this.recordList));
+    model.save(this.recordList);
   }
 
 }
