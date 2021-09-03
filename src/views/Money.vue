@@ -6,7 +6,7 @@
     <!--<Types :value="record.type" @update:value="onUpdateType"/>-->
     <!--传给子组件的value的值是record.type，子组件改的也是record.type，直接value.sync-->
     <Types :value.sync="record.type"/>
-    <Notes field-name="备注" placeholder="请在这里输入备注" @update:value="onUpdateNotes" />
+    <FormItem field-name="备注" placeholder="请在这里输入备注" @update:value="onUpdateNotes" />
     <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
   </Layout>
 
@@ -21,9 +21,10 @@ import {Component,Watch} from 'vue-property-decorator';
 import NumberPad from '@/components/Money/NumberPad.vue';
 import Types from '@/components/Types.vue';
 import Tags from '@/components/Money/Tags.vue';
-import Notes from '@/components/Money/Notes.vue';
+
 import {recordListModel} from '@/models/recordListModel';
 import {tagListModel} from '@/models/tagListModel';
+import FormItem from '@/components/Money/FormItem.vue';
 
 
 
@@ -38,7 +39,7 @@ type Record = {
 }
 
 @Component({
-  components: {Tags, Notes, Types, NumberPad}
+  components: {FormItem, Tags, Notes, Types, NumberPad}
 })
 export default class Money extends Vue {
   tags = tagList;
