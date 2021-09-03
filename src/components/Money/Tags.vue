@@ -17,6 +17,7 @@ import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
 @Component
 export default class Tags extends Vue{
+  // readonly外部数据只读
   @Prop() readonly dataSource: string[] | undefined;
   selectedTags: string[] = [];
   toggle(tag: string){
