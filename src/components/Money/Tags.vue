@@ -15,11 +15,17 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import {store} from '@/store/index2';
-@Component
+
+@Component({
+  computed:{
+    tagList(){
+      return []
+    }
+  }
+})
 export default class Tags extends Vue{
   // readonly外部数据只读
-tagList = store.fetchTags();
+//tagList = store.fetchTags();
   selectedTags: string[] = [];
   toggle(tag: string){
     const length = this.selectedTags.length;
@@ -35,7 +41,7 @@ tagList = store.fetchTags();
     const name = window.prompt('请输入标签名');
     if (!name) {return window.alert('标签名不能为控')}
 
-    store.createTag(name);
+   // store.createTag(name);
   }
 }
 </script>
