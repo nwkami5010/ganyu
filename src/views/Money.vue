@@ -2,12 +2,11 @@
   <Layout class-prefix="layout">
 
 
-    <NumberPad :value="record.amount" @update:value="onUpdateAmount" @submit="saveRecord"/>
-    <!--<Types :value="record.type" @update:value="onUpdateType"/>-->
-    <!--传给子组件的value的值是record.type，子组件改的也是record.type，直接value.sync-->
+    <NumberPad :value.sync="record.amount"  @submit="saveRecord"/>
+
     <Tabs :data-source="recordTypeList"/>
     <div class="notes">
-    <FormItem :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注" @update:value="onUpdateNotes" />
+    <FormItem :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注"/>
     </div>
     <Tags :value.sync = "record.tags"/>
   </Layout>
@@ -38,29 +37,14 @@ import Tabs from '@/components/Tabs.vue';
 
 })
 export default class Money extends Vue {
-  get recordList() {
-    return this.$store.state.recordList;
-  }
+
   recordTypeList = recordTypeList;
-
-
 
   record: RecordItem = {
     tags: [], notes: '', type: '-', amount: 0
   };
 
-  created() {
-    this.$store.commit('fetchRecords');
-    this.$store.commit('fetchTags');
-  }
 
-  onUpdateNotes(value: string) {
-    this.record.notes = value;
-  }
-
-  onUpdateAmount(value: string) {
-    this.record.amount = parseFloat(value);
-  }
 
   saveRecord(){
     // 深拷贝：先变成字符串，再变成对象，这样就不是同一个内存地址了

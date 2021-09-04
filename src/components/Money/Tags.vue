@@ -31,13 +31,13 @@ export default class Tags extends mixins(TagHelper){
   }
   toggle(tag: string){
     const length = this.selectedTags.length;
-    const index = this.selectedTags.indexOf(tag)
-    if(index>=0){
-      this.selectedTags.splice(index,1)
-    } else {
+    // const index = this.selectedTags.indexOf(tag)
+    // if(index>=0){
+    //   this.selectedTags.splice(index,1)
+    // } else {
       if(length > 0) {this.selectedTags.pop();}
 
-    }
+
     this.selectedTags.push(tag)
   }
 

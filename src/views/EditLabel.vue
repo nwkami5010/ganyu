@@ -8,7 +8,7 @@
         <span class="rightIcon"/>
       </div>
       <div class="form-wrapper">
-        <FormItem :value="currentTag.name" @update:value="update"  placeholder="请输入标签名"/>
+        <FormItem :value="currentTag.name" @update:value="update" />
       </div>
       <div class="button-wrapper">
         <Button @click="remove">删除标签</Button>
