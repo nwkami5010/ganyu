@@ -19,7 +19,7 @@ import {Component} from 'vue-property-decorator';
 @Component({
   computed:{
     tagList(){
-      return []
+      return this.$store.state.tagList;
     }
   }
 })
@@ -27,21 +27,24 @@ export default class Tags extends Vue{
   // readonly外部数据只读
 //tagList = store.fetchTags();
   selectedTags: string[] = [];
+  created() {
+    this.$store.commit('fetchTags');
+  }
   toggle(tag: string){
     const length = this.selectedTags.length;
     const index = this.selectedTags.indexOf(tag)
     if(index>=0){
       this.selectedTags.splice(index,1)
     } else {
-      this.selectedTags.pop();
+      if(length > 0) {this.selectedTags.pop();}
+
     }
     this.selectedTags.push(tag)
   }
   create() {
     const name = window.prompt('请输入标签名');
     if (!name) {return window.alert('标签名不能为控')}
-
-   // store.createTag(name);
+    this.$store.commit('createTag', name);
   }
 }
 </script>
