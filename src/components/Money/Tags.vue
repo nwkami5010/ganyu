@@ -22,9 +22,12 @@ export default class Tags extends Vue{
 tagList = store.fetchTags();
   selectedTags: string[] = [];
   toggle(tag: string){
+    const length = this.selectedTags.length;
     const index = this.selectedTags.indexOf(tag)
     if(index>=0){
       this.selectedTags.splice(index,1)
+    } else {
+      this.selectedTags.pop();
     }
     this.selectedTags.push(tag)
   }

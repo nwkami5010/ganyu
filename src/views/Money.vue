@@ -9,7 +9,7 @@
     <div class="notes">
     <FormItem field-name="备注" placeholder="请在这里输入备注" @update:value="onUpdateNotes" />
     </div>
-    <Tags/>
+    <Tags :value.sync = "record.tags"/>
   </Layout>
 
 
@@ -54,6 +54,7 @@ export default class Money extends Vue {
   saveRecord(){
     // 深拷贝：先变成字符串，再变成对象，这样就不是同一个内存地址了
     store.createRecord(this.record);
+
   }
 
 
