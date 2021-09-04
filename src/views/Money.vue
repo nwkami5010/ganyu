@@ -24,6 +24,7 @@ import NumberPad from '@/components/Money/NumberPad.vue';
 import Types from '@/components/Types.vue';
 import Tags from '@/components/Money/Tags.vue';
 import FormItem from '@/components/Money/FormItem.vue';
+import {store} from '@/store/index2';
 
 
 
@@ -34,8 +35,8 @@ import FormItem from '@/components/Money/FormItem.vue';
   components: {FormItem, Tags, Notes, Types, NumberPad}
 })
 export default class Money extends Vue {
-  tags = tagList;
-  recordList= window.recordList;
+  tags = store.tagList;
+  recordList= store.recordList;
   record: RecordItem = {
     tags: [], notes: '', type: '-', amount: 0
   };
@@ -54,7 +55,7 @@ export default class Money extends Vue {
 
   saveRecord(){
     // 深拷贝：先变成字符串，再变成对象，这样就不是同一个内存地址了
-    window.createRecord(this.record);
+    store.createRecord(this.record);
   }
 
 
