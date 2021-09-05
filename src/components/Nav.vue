@@ -42,10 +42,7 @@
             width: 32px;
             height: 32px;
 
-            &.statistics {
-              width: 22px;
-              height: 22px;
-            }
+
           }
 
           > .item.selected {
