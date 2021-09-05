@@ -1,12 +1,8 @@
 <template >
   <Layout class-prefix="layout">
-
-
-    <NumberPad :value.sync="record.amount"  @submit="saveRecord"/>
-
-    <Tabs :data-source="recordTypeList"/>
+    <NumberPad :value="record.amount" @update:value="onUpdateAmount" @submit="saveRecord"/>
     <div class="notes">
-    <FormItem :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注"/>
+      <FormItem :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注" @update:value="onUpdateNotes"/>
     </div>
     <Tags :value.sync = "record.tags"/>
     <Tabs :data-source="recordTypeList" :value.sync="record.type"/>
@@ -38,15 +34,26 @@ import Tabs from '@/components/Tabs.vue';
 
 })
 export default class Money extends Vue {
-
+  get recordList() {
+    return this.$store.state.recordList;
+  }
   recordTypeList = recordTypeList;
 
   record: RecordItem = {
     tags: [], notes: '', type: '-', amount: 0
   };
 
+  created() {
+    this.$store.commit('fetchRecords');
+    this.$store.commit('fetchTags');
+  }
+  onUpdateNotes(value: string) {
+    this.record.notes = value;
+  }
 
-
+  onUpdateAmount(value: string) {
+    this.record.amount = parseFloat(value);
+  }
   saveRecord(){
     // 深拷贝：先变成字符串，再变成对象，这样就不是同一个内存地址了
     if (!this.record.tags || this.record.tags.length === 0) {

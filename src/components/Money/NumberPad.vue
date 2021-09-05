@@ -92,6 +92,7 @@ export default class NumberPad extends Vue {
       &.ok {
         height: 64*2px;
         float: right; //左浮动右浮动
+        color: white;
       }
 
       &.zero {

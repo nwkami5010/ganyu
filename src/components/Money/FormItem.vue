@@ -37,6 +37,7 @@ export default class FormItem extends Vue {
   padding-left:  16px;
   display: flex;//拉长宽度
   align-items: center;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   .name{
     padding-right: 16px;
   }

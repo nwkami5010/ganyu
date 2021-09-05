@@ -49,7 +49,7 @@ import Labels from '@/views/Labels.vue';
 import {setName} from "@/lib/setName";
 import TagHelper from '@/mixins/TagHelper';
 
-@Component({
+@Component({TODO
   components: {Labels, EditLabel}
 })
 export default class Tags extends mixins(TagHelper){
