@@ -22,7 +22,7 @@ import Tags from '@/components/Money/Tags.vue';
 import FormItem from '@/components/Money/FormItem.vue';
 import recordTypeList from '@/constants/recordTypeList';
 import Tabs from '@/components/Tabs.vue';
-
+import { Toast } from 'vant';
 import DataPick from "@/components/datePick.vue";
 
 
@@ -64,6 +64,7 @@ export default class Money extends Vue {
       return window.alert('请选择一个标签');
     }
     this.$store.commit('createRecord', this.record);
+    Toast.success('已记一笔');
     this.record.notes = '';
   }
 
