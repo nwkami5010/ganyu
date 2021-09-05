@@ -58,6 +58,9 @@ export default class Tags extends mixins(TagHelper){
   get tagList() {
     return this.$store.state.tagList;
   }
+  get tagIncome() {
+    return this.$store.state.tagIncome;
+  }
   setName(tag: Tag) {
     if (tag.name.toString().indexOf('吃') >= 0) {
       return '吃饭';
@@ -86,14 +89,9 @@ export default class Tags extends mixins(TagHelper){
   }
   toggle(tag: string){
     const length = this.selectedTags.length;
-    // const index = this.selectedTags.indexOf(tag)
-    // if(index>=0){
-    //   this.selectedTags.splice(index,1)
-    // } else {
-      if(length > 0) {this.selectedTags.pop();}
-
-
+    if(length > 0) {this.selectedTags.pop();}
     this.selectedTags.push(tag)
+    this.$emit('update:value', this.selectedTags);
   }
 
 }

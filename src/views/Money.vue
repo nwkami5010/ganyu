@@ -7,7 +7,7 @@
       </FormItem>
     </div>
     <Tags :value.sync = "record.tags"/>
-    <Tabs :data-source="recordTypeList" :value.sync="record.type"/>
+    <Tabs :data-source="recordTypeList" :value.sync="record.type" :type="record.type"/>
   </Layout>
 
 
@@ -26,8 +26,6 @@ import { Toast } from 'vant';
 import DataPick from "@/components/datePick.vue";
 
 
-
-
 @Component({
   components: {FormItem, Tags,  NumberPad,Tabs, DataPick},
 
@@ -39,30 +37,31 @@ export default class Money extends Vue {
   recordTypeList = recordTypeList;
 
   record: RecordItem = {
-    tags: [], notes: '', type: '-', amount: 0, createdAt: new Date()
+    tags: [], notes: '', type: '-', amount: 0, createdAt: new Date().toISOString(), id: 1
   };
 
   created() {
     this.$store.commit('fetchRecords');
     this.$store.commit('fetchTags');
   }
-  onUpdateTime(value: Date) {
+  onUpdateTime(value: string) {
     this.record.createdAt = value;
   }
 
 
-  onUpdateNotes(value: string) {
-    this.record.notes = value;
-  }
+  // onUpdateNotes(value: string) {
+  //   this.record.notes = value;
+  // }
 
   onUpdateAmount(value: string) {
     this.record.amount = parseFloat(value);
   }
   saveRecord(){
-    // 深拷贝：先变成字符串，再变成对象，这样就不是同一个内存地址了
     if (!this.record.tags || this.record.tags.length === 0) {
       return window.alert('请选择一个标签');
     }
+    const dateId = Date.parse(this.record.createdAt!);
+    this.record.id = Math.random() + dateId;
     this.$store.commit('createRecord', this.record);
     Toast.success('已记一笔');
     this.record.notes = '';

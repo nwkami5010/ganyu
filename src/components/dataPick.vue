@@ -7,7 +7,7 @@
     <div class="iconWrapper">
     </div>
     <Popup position="bottom" round v-model="show" :style="{ height: '60%' }">
-      <DatetimePicker @confirm="check" v-model="currentDate" :min-date="minDate" :max-date="maxDate" type="date" title="选择年月日"/>
+      <DatetimePicker type="date" @confirm="check" v-model="currentDate" :min-date="minDate" :max-date="maxDate"  title="选择年月日"/>
     </Popup>
   </div>
 </template>
@@ -31,7 +31,7 @@ export default {
     check(value) {
       this.show = false;
       this.now = dayjs(value.toISOString()).format('MM月DD日');
-      this.$emit('timeupdate', value);
+      this.$emit('timeupdate', value.toISOString());
     },
     showPopup() {
       this.show = !this.show;

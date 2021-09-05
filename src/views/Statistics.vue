@@ -2,37 +2,37 @@
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
     <ol v-if="groupedList.length>0">
+      {{groupedList}}
       <li v-for="(group,index) in groupedList" :key="index">
-        <h3 class="title">{{beautify(group.title)}} <span>￥{{group.total}}</span></h3>
+        <h3 class="title">{{ beautify(group.title) }} <span>￥{{ group.total }}</span></h3>
         <ol>
-          <li v-for="item in group.items" :key="item.id"
-              class="record"
-          >
-            <span>{{tagString(item.tags)}}</span>
-            <span class="note">{{item.notes}}</span>
-            <span>￥{{item.amount}} </span>
-          </li>
+          <!--<li v-for="item in group.items" :key="item.id" class="record">-->
+          <router-link :to="`/labels/edit/${item.id}`" v-for="item in group.items" :key="item.id" class="record">
+            <span>{{ tagString(item.tags) }}</span>
+            <span class="note">{{ item.notes }}</span>
+            <span class="note">{{ item.createdAt}}</span>
+            <span>￥{{ item.amount }} </span>
+          </router-link>
+          <!--</li>-->
         </ol>
       </li>
     </ol>
+    <div class="noResult" v-else>目前没有相关记录</div>
   </Layout>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-
 import Tabs from '@/components/Tabs.vue';
 import recordTypeList from '@/constants/recordTypeList';
-import intervalList from '@/constants/intervalList';
 import dayjs from 'dayjs';
 import {clone} from '@/lib/clone';
 @Component({
   components: {Tabs}
 })
-export default class Statistics extends Vue{
+export default class Statistics extends Vue {
   tagString(tags: Tag[]) {
-    console.log(tags);
     if (tags.length === 0) {
       return '无';
     } else {
@@ -40,11 +40,9 @@ export default class Statistics extends Vue{
       return name;
     }
   }
-
   beautify(string: string) {
     const day = dayjs(string);
     const now = dayjs();
-
     if (day.isSame(now, 'day')) {
       return '今天';
     } else if (day.isSame(now.subtract(1, 'day'), 'day')) {
@@ -57,24 +55,19 @@ export default class Statistics extends Vue{
       return day.format('YYYY年M月D日');
     }
   }
-
   get recordList() {
     return (this.$store.state as RootState).recordList;
   }
-
   get groupedList() {
     const {recordList} = this;
     if (recordList.length === 0) {return [];}
-
     const newList = clone(recordList)
         .filter(r => r.type === this.type)
         .sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
     if (newList.length === 0) {return [] as Result;}
     //eslint-disable-next-line
-
-    type Result = { title: string;total?: number; items: RecordItem[] }[]
+    type Result = { title: string, total?: number, items: RecordItem[] }[]
     const result: Result = [{title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'), items: [newList[0]]}];
-
     for (let i = 1; i < newList.length; i++) {
       const current = newList[i];
       const last = result[result.length - 1];
@@ -84,7 +77,6 @@ export default class Statistics extends Vue{
         result.push({title: dayjs(current.createdAt).format('YYYY-MM-DD'), items: [current]});
       }
     }
-    console.log(result);
     result.map(group => {
       group.total = group.items.reduce((sum, item) => {
         return sum + item.amount;
@@ -92,14 +84,11 @@ export default class Statistics extends Vue{
     });
     return result;
   }
-
   beforeCreate() {
     this.$store.commit('fetchRecords');
   }
   type = '-';
-
   recordTypeList = recordTypeList;
-
 }
 </script>
 
@@ -110,7 +99,6 @@ export default class Statistics extends Vue{
 }
 ::v-deep {
   .type-tabs-item {
-
     &.selected {
       background: white;
       &::after {

@@ -5,7 +5,8 @@
       <li v-for="item in dataSource " :key="item.value"
           class="tabs-item"
           :class="liClass(item)"
-          @click="select(item)">{{item.text}}
+          @click="select(item)">
+        {{item.text}}
       </li>
     </ul>
   </div>

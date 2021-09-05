@@ -8,7 +8,7 @@
         <span class="rightIcon"/>
       </div>
       <div class="form-wrapper">
-        <FormItem :value="currentTag.name" @update:value="update" />
+        <FormItem :value="currentTag.name" @update:value="update" field-name="标签名"/>
       </div>
       <div class="button-wrapper">
         <Button @click="remove">删除标签</Button>
@@ -35,7 +35,7 @@ export default class EditLabel extends Vue {
     const id = this.$route.params.id;
     this.$store.commit('fetchTags');
     this.$store.commit('setCurrentTags',id);
-    if(!this.tag) {
+    if(!this.currentTag) {
       this.$router.replace('/404')
     }
   }

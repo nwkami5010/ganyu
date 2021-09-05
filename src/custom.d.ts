@@ -6,11 +6,13 @@ type RecordItem = {
   type: string;
   amount: number;
   createdAt?: Date;
+  id?: number;
 }
 type RootState = {
   recordList: RecordItem[];
   tagList: Tag[];
   currentTag?: Tag;
+  tagIncome?: Tag[];
 }
 type Tag = {
   id: string;
