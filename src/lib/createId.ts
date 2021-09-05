@@ -1,12 +1,9 @@
-
 let id: number = parseInt(window.localStorage.getItem('_idMax') || '0') || 0;
-console.log(id);
+
 function createId() {
-  console.log(id);
-  id++;
-  window.localStorage.setItem('_idMax', id.toString());
-  return id;
+    id++;
+    window.localStorage.setItem('_idMax', id.toString());
+    return id;
 }
 
 export {createId};
-

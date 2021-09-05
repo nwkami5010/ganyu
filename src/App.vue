@@ -1,34 +1,26 @@
 <template>
-<div id="app">
-
-
-  <router-view/>
-
-
-</div>
+    <div id="app">
+        <router-view/>
+    </div>
 </template>
 
 <style lang="scss">
-  @import"~@/assets/style/reset.scss";
-  @import"~@/assets/style/helper.scss";
-body{
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  line-height: 1.5;
-  background: #f5f5f5;
-  font-family: $font-hei;
-  font-size: 16px;
+@import "~@/assets/style/helper.scss";
+@import "~@/assets/style/reset.scss";
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #333;
+    font-family: $font-hei;
+    font-size: 16px;
+    line-height: 1.5;
+    background: #F5F5F5;
 }
-.clearfix::after{
-  content:'';
-  display:block;
-  clear:both;
-}
-  #app {
+
+#app {
     max-width: 450px;
     min-width: 300px;
     margin: 0 auto;
-  }
-
+}
 </style>
