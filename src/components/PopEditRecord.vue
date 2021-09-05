@@ -1,6 +1,6 @@
 <template>
     <div>
-      {{currentRecord.amount}}
+      {{currentRecord}}
         <div @click="showPopup" class="iconWrapper">
             点我
         </div>
@@ -26,7 +26,9 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from "vue";
+import {Component, Prop} from 'vue-property-decorator';
 import {Popup} from 'vant';
 import NumberPad from '@/components/Money/NumberPad.vue';
 import FormItem from '@/components/Money/FormItem.vue';
@@ -35,41 +37,35 @@ import Tags from '@/components/Money/Tags.vue';
 // import Tabs from '@/components/Tabs.vue';
 import recordTypeList from '@/constants/recordTypeList';
 
+@Component({
+  components: {Popup, NumberPad, FormItem, DataPick, Tags},
+})
+export default class EditLabel extends Vue{
+  get currentRecord() {
+    return this.$store.state.currentRecord;
+  }
+  created() {
+    // const id = this.popCurrentRecord!.id;
+    // console.log(id);
+  }
+  show = false;
+  recordTypeList = recordTypeList;
+  selected = '';
+  showPopup() {
+    this.show = !this.show;
+  }
+  select(item: DataSourceItem) {
+    this.selected = item.value;
+    console.log(this.selected);
+    // this.$emit('update:value', item.value);
+  }
+  liClass(item: DataSourceItem) {
+    return {
+      selected: item.value === this.selected
+    };
+  }
+}
 
-export default {
-    components: {Popup, NumberPad, FormItem, DataPick, Tags},
-    props: {
-    currentRecord: {
-      type: Object
-    }
-  },
-    data: () => {
-        return {
-            show: false,
-            recordTypeList: recordTypeList,
-            selected: '',
-        };
-    },
-    methods: {
-        // check(value) {
-        //     this.show = false;
-        //     this.$emit('timeupdate', value.toISOString());
-        // },
-        showPopup() {
-            this.show = !this.show;
-        },
-        select(item) {
-            this.selected = item.value
-            console.log(this.selected);
-            // this.$emit('update:value', item.value);
-        },
-        liClass(item) {
-            return {
-                selected: item.value === this.selected
-            };
-        }
-    }
-};
 </script>
 
 <style lang="scss" scoped>

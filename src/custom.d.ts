@@ -8,6 +8,7 @@ type RecordItem = {
     createdAt?: string;
     id: number;
 }
+type DataSourceItem = { text: string; value: string }
 
 type RootState = {
     recordList: RecordItem[];
