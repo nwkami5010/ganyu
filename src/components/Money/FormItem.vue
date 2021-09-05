@@ -1,28 +1,30 @@
 <template>
-  <div>
+  <div class="formWrapper">
     <label class="formItem">
       <span class="name"> {{this.fieldName }}</span>
-      <!--当input的value等于输入的value，可以用v-model代替-->
+
       <input type="text" :value="value" @change="onValueChanged($event.target.value)"
 
              placeholder="placeholder">
     </label>
-
+    <slot></slot>
+    <DataPick/>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component,Prop,Watch} from 'vue-property-decorator';
+import {Component,Prop} from 'vue-property-decorator';
+import DataPick from "@/components/datePick.vue";
 
-@Component
+@Component({
+  components: {DataPick}
+})
 export default class FormItem extends Vue {
   @Prop({default:''}) value!: string;
   @Prop({required:true}) fieldName!: string;
   @Prop() placeholder?: string;
 
-
-  @Watch('value')
   onValueChanged(value: string) {
     this.$emit('update:value',value);
   }
@@ -30,6 +32,11 @@ export default class FormItem extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.formWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .formItem{
   font-size: 14px;
   background: #f5f5f5;

@@ -42,19 +42,18 @@
 
 <script lang="ts">
 
-import {Component,Prop} from 'vue-property-decorator';
+import {Component} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
 import EditLabel from '@/views/EditLabel.vue';
 import Labels from '@/views/Labels.vue';
-import {setName} from "@/lib/setName";
+
 import TagHelper from '@/mixins/TagHelper';
 
-@Component({TODO
+@Component({
   components: {Labels, EditLabel}
 })
 export default class Tags extends mixins(TagHelper){
-  // readonly外部数据只读
-//tagList = store.fetchTags();
+
   selectedTags: string[] = [];
   get tagList() {
     return this.$store.state.tagList;

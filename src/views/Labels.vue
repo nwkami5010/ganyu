@@ -1,45 +1,35 @@
+
 <template>
   <Layout>
     <div class="tags">
       <router-link class="tag" v-for="tag in tags" :key="tag.id"
-        :to="`/labels/edit/${tag.id}`"
-        >
-        <span>{{tag.name}}</span>
+                   :to="`/labels/edit/${tag.id}`">
+        <span>{{ tag.name }}</span>
         <Icon name="right"/>
       </router-link>
     </div>
     <div class="createTag-wrapper">
-      <button class="createTag" @click="createTag">
-        新建标签
-      </button>
+      <Button class="createTag" @click="createTag">新建标签</Button>
     </div>
   </Layout>
 </template>
 
 <script lang="ts">
-
 import {Component} from 'vue-property-decorator';
 import Button from '@/components/Button.vue';
 import {mixins} from 'vue-class-component';
-import SelectedDate from '@/views/SelectedDate.vue';
 import TagHelper from '@/mixins/TagHelper';
-
-
 @Component({
-  components: {SelectedDate, Button},
+  components: {Button},
 })
-
-export default class Labels extends mixins<TagHelper>{
+export default class Labels extends mixins(TagHelper) {
   get tags() {
     return this.$store.state.tagList;
   }
-
-  createTag() {
-    const name = window.prompt('请输入标签名');
-    if (name) {
-      //  store.createTag(name)
+  created() {
+    this.$store.commit('fetchTags');
   }
-}}
+}
 </script>
 
 <style lang="scss" scoped>
