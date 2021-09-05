@@ -1,5 +1,6 @@
 <template>
     <div>
+      {{currentRecord.amount}}
         <div @click="showPopup" class="iconWrapper">
             点我
         </div>
@@ -13,7 +14,7 @@
                     </ul>
                     <DataPick/>
                 </div>
-                <!--<Tabs :data-source="recordTypeList"/>-->
+
                 <Tags/>
                 <div class="notes">
                     <FormItem field-name="备注" placeholder="请在这里输入备注">
@@ -37,7 +38,11 @@ import recordTypeList from '@/constants/recordTypeList';
 
 export default {
     components: {Popup, NumberPad, FormItem, DataPick, Tags},
-
+    props: {
+    currentRecord: {
+      type: Object
+    }
+  },
     data: () => {
         return {
             show: false,
