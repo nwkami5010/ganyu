@@ -16,6 +16,7 @@ type RootState = {
     tagIncome?: Tag[];
     currentTag?: Tag;
     currentRecord?: RecordItem;
+    createTagError?: Error | null;
 }
 
 type Tag = {

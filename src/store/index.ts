@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import {clone} from '@/lib/clone';
 import {createId} from '@/lib/createId';
 import router from '@/router';
-
+import {Dialog} from 'vant';
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -11,7 +11,8 @@ const store = new Vuex.Store({
         recordList: [],
         tagList: [],
         currentTag: undefined,
-        currentRecord: undefined
+        currentRecord: undefined,
+      //  createTagError: null
     } as RootState,
     mutations: {
         setCurrentTag(state, id: string) {
@@ -59,7 +60,7 @@ const store = new Vuex.Store({
             }
         },
         removeRecord(state, id: number) {
-            console.log(id);
+
             let index = -1;
             for (let i = 0; i < state.recordList.length; i++) {
                 if (state.recordList[i].id === id) {
@@ -97,17 +98,27 @@ const store = new Vuex.Store({
                 store.commit('createTag', '住房缴费');
                 store.commit('createTag', '水电气');
                 store.commit('createTag', '娱乐休闲');
+                store.commit('createTag', '工资');
             }
         },
         createTag(state, name: string) {
             const names = state.tagList.map(item => item.name);
             if (names.indexOf(name) >= 0) {
-                window.alert('标签名重复了');
+
+                Dialog.alert({
+                    title: '添加失败',
+                    message: '标签名重复了',
+                }).then(() => {
+                    return;
+                });
+
+                return;
+            } else {
+                const id = createId().toString();
+                state.tagList.push({id, name: name});
+                store.commit('saveTags');
             }
-            const id = createId().toString();
-            state.tagList.push({id, name: name});
-            store.commit('saveTags');
-            // window.alert('添加成功');
+
         },
         saveTags(state) {
             window.localStorage.setItem('tagList', JSON.stringify(state.tagList));
