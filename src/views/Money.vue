@@ -9,6 +9,7 @@
     <FormItem :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注"/>
     </div>
     <Tags :value.sync = "record.tags"/>
+    <Tabs :data-source="recordTypeList" :value.sync="record.type"/>
   </Layout>
 
 

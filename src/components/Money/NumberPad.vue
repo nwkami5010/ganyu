@@ -121,7 +121,7 @@ export default class NumberPad extends Vue {
       }
 
       &:nth-child(12) {
-        background: darken($bg, 4*6%);
+        background: #2b2e4a;
       }
 
       &:nth-child(14) {

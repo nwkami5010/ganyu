@@ -21,22 +21,18 @@
 import {Component} from 'vue-property-decorator';
 import Button from '@/components/Button.vue';
 import {mixins} from 'vue-class-component';
-
+import SelectedDate from '@/views/SelectedDate.vue';
 import TagHelper from '@/mixins/TagHelper';
 
 
-
 @Component({
-  components : {Button},
-  computed: {
-    tags() {
-      return this.$store.state.tagList;
-    }
-  }
+  components: {SelectedDate, Button},
+})
 
-},)
 export default class Labels extends mixins<TagHelper>{
-  tags =[];
+  get tags() {
+    return this.$store.state.tagList;
+  }
 
   createTag() {
     const name = window.prompt('请输入标签名');
