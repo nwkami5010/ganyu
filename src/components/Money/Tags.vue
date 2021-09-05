@@ -3,7 +3,7 @@
         <div v-if="show" class="new">
             <button @click="createTag">新增标签</button>
         </div>
-        <ul class="current">
+        <ul class="current" v-if="selectedTag">
             <li v-for="tag in tagList" :key="tag.id"
                 :class="{selected:selectedTags.indexOf(tag)>=0}"
                 @click="toggle(tag)">
@@ -21,6 +21,22 @@
                 编辑标签
             </li>
         </ul>
+      <ul class="current" v-else>
+        <li v-for="tag in tagList" :key="tag.id" :class="{selected:selectedTags.indexOf(tag)>=0}" @click="toggle(tag)">
+          <div>
+            <Icon :name="setName(tag)"/>
+          </div>
+          {{ tag.name }}
+        </li>
+        <li>
+          <div>
+            <router-link to="/labels">
+              <Icon name="编辑"/>
+            </router-link>
+          </div>
+          编辑标签
+        </li>
+      </ul>
     </div>
 </template>
 
@@ -35,23 +51,19 @@ import Labels from '@/views/Labels.vue';
     components: {Labels, EditLabel}
 })
 export default class Tags extends mixins(TagHelper) {
+  @Prop(Object)
+  selectedTag!: Tag;
+
   @Prop(String)
   readonly show!: string;
-    selectedTags: string[] = [];
-    // currentLabel = true;
 
-    // @Watch('type')
-    // changeLabel() {
-    //     this.currentLabel = this.type === '-';
-    // }
+    selectedTags: Tag [] = [];
 
     get tagList() {
         return this.$store.state.tagList;
     }
 
-    get tagIncome() {
-        return this.$store.state.tagIncome;
-    }
+
 
     setName(tag: Tag) {
         if (tag.name.toString().indexOf('吃') >= 0) {
@@ -77,9 +89,14 @@ export default class Tags extends mixins(TagHelper) {
         }
     }
 
-    created() {this.$store.commit('fetchTags');}
+    created() {
+      this.$store.commit('fetchTags')
+      if (this.selectedTag) {
+        this.toggle(this.selectedTag);
+      }
+    }
 
-    toggle(tag: string) {
+    toggle(tag: Tag) {
         const length = this.selectedTags.length;
         if (length > 0) {
             this.selectedTags.pop();
