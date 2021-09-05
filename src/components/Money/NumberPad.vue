@@ -80,7 +80,7 @@ export default class NumberPad extends Vue {
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
 
-$blue: #2b2e4a;
+$blue: #f0a141;
 
 .numberPad {
     .output {
@@ -145,7 +145,7 @@ $blue: #2b2e4a;
             }
 
             &:nth-child(12) {
-                background: lighten($blue, 30%)
+                background: lighten($blue, 10%)
             }
         }
     }

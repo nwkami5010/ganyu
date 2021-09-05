@@ -141,7 +141,7 @@ export default class Tags extends mixins(TagHelper) {
                 color: #333333;
 
                 .icon {
-                    fill: #e84545;
+                    fill: #007aff;
                 }
             }
         }

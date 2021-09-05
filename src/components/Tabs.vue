@@ -37,7 +37,7 @@ export default class Tabs extends Vue {
 
 <style lang="scss" scoped>
 .tabsWrapper {
-    background: #2b2e4a;
+    background: #007aff;
     height: 60px;
     display: flex;
     align-items: center;

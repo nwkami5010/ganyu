@@ -37,16 +37,13 @@
           justify-content: center;
           align-items: center;
           flex-direction: column;
-
           .icon {
             width: 32px;
             height: 32px;
-
-
           }
-
+        }
           > .item.selected {
             color: $color-highlight;
           }
-        }}
+        }
 </style>
