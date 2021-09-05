@@ -68,7 +68,12 @@ export default class NumberPad extends Vue {
 $blue: #2b2e4a;
 .numberPad {
   .output {
-    @extend %clearFix;
+    %clearfix{
+      &::after{
+        content:'';
+        clear: both;
+        display: block;}
+    }
     @extend %innerShadow;
     font-size: 36px;
     font-family: Consolas, monospace;
@@ -77,7 +82,12 @@ $blue: #2b2e4a;
     height: 72px;
   }
   .buttons {
-    @extend %clearFix;
+    %clearfix{
+      &::after{
+        content:'';
+        clear: both;
+        display: block;}
+    }
     > button {
       width: 25%;
       height: 64px;
