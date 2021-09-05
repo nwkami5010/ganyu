@@ -75,7 +75,7 @@ export default class Tags extends mixins(TagHelper) {
         } else if (tag.name.toString().indexOf('日用品') >= 0) {
             return '日用品';
         } else if (tag.name.toString().indexOf('住房') >= 0) {
-            return '住';
+            return '房贷';
         } else if (tag.name.toString().indexOf('水') >= 0) {
             return '水电气';
         } else if (tag.name.toString().indexOf('娱乐') >= 0) {
