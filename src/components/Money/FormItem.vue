@@ -1,6 +1,7 @@
 <template>
   <div class="formWrapper">
-    <label class="formItem">
+    <div class="formItem">
+    <label >
       <span class="name"> {{this.fieldName }}</span>
 
       <input type="text" :value="value" @change="onValueChanged($event.target.value)"
@@ -8,7 +9,7 @@
              placeholder="placeholder">
     </label>
     <slot></slot>
-    <DataPick/>
+    </div>
   </div>
 </template>
 
@@ -32,28 +33,28 @@ export default class FormItem extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.formWrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.formItem{
+
+.formItem {
   font-size: 14px;
-  background: #f5f5f5;
-  // display: block;//label默认display:inlineblock,改成block才能显示上面背景
-  padding-left:  16px;
-  display: flex;//拉长宽度
+  padding-left: 16px;
+  display: flex;
   align-items: center;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  .name{
-    padding-right: 16px;
+  label{
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
   }
-  input{
-    height:40px;//height line-height都可以 64px
-    flex-grow: 1;//尽量不写宽度
+  > div {
+    flex-shrink: 0;
+  }
+  .name {
+  }
+  input {
+    height: 40px;
+    flex-grow: 1;
     background: transparent;
     border: none;
-    padding-right: 16px;
+    margin-left: 10px;
   }
 }
 </style>

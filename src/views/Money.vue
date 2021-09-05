@@ -2,7 +2,9 @@
   <Layout class-prefix="layout">
     <NumberPad :value="record.amount" @update:value="onUpdateAmount" @submit="saveRecord"/>
     <div class="notes">
-      <FormItem :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注"></FormItem>
+      <FormItem :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注">
+        <DataPick @timeupdate="onUpdateTime"/>
+      </FormItem>
     </div>
     <Tags :value.sync = "record.tags"/>
     <Tabs :data-source="recordTypeList" :value.sync="record.type"/>
@@ -21,13 +23,13 @@ import FormItem from '@/components/Money/FormItem.vue';
 import recordTypeList from '@/constants/recordTypeList';
 import Tabs from '@/components/Tabs.vue';
 
-
+import DataPick from "@/components/datePick.vue";
 
 
 
 
 @Component({
-  components: {FormItem, Tags,  NumberPad,Tabs},
+  components: {FormItem, Tags,  NumberPad,Tabs, DataPick},
 
 })
 export default class Money extends Vue {
@@ -37,13 +39,18 @@ export default class Money extends Vue {
   recordTypeList = recordTypeList;
 
   record: RecordItem = {
-    tags: [], notes: '', type: '-', amount: 0
+    tags: [], notes: '', type: '-', amount: 0, createdAt: new Date()
   };
 
   created() {
     this.$store.commit('fetchRecords');
     this.$store.commit('fetchTags');
   }
+  onUpdateTime(value: Date) {
+    this.record.createdAt = value;
+  }
+
+
   onUpdateNotes(value: string) {
     this.record.notes = value;
   }

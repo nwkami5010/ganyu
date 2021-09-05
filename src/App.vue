@@ -25,6 +25,10 @@ body{
   display:block;
   clear:both;
 }
-
+  #app {
+    max-width: 450px;
+    min-width: 300px;
+    margin: 0 auto;
+  }
 
 </style>
